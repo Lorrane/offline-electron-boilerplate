@@ -1,8 +1,9 @@
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
 
+const buscaTudo = "select * from livro";
+
 export function sendAsync(message) {
-  console.log({ message })
   return new Promise((resolve) => {
     ipcRenderer.once('asynchronous-reply', (_, arg) => {
       resolve(arg);
@@ -11,8 +12,16 @@ export function sendAsync(message) {
   });
 }
 
+export function buscaLivros(buscaTudo) {
+  return new Promise((resolve) => {
+    ipcRenderer.once('asynchronous-reply', (_, arg) => {
+      resolve(arg);
+    });
+    ipcRenderer.send('asynchronous-message', buscaTudo);
+  });
+}
+
 export function sendTeste(message) {
-  console.log({ message })
   return new Promise((resolve) => {
     ipcRenderer.once('teste-reply', (_, arg) => {
       resolve(arg);

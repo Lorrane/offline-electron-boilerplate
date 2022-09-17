@@ -4,8 +4,8 @@ import { createConnection, getRepository } from 'typeorm';
 import './App.css';
 import { Contact } from './entities/Contact';
 import { Product } from './entities/Product';
-import logo from './logo.svg';
 import { sendAsync } from './message-control/renderer';
+import Rotas from './routes';
 import ConnectionObject from './utils/connectionObject';
 
 function App() {
@@ -13,6 +13,10 @@ function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [productName, setProductName] = useState<string>('');
   const [productPrice, setProductPrice] = useState<string>('');
+  const [contactFirstName, setContactFirstName] = useState<string>('');
+  const [contactLastName, setContactLastName] = useState<string>('');
+  const [contactEmail, setContactEmail] = useState<string>('');
+  const [contactPhone, setContactPhone] = useState<string>('');
 
   const [message, setMessage] = useState<string>('');
   const [responses, setResponses] = useState<any[]>([]);
@@ -29,22 +33,27 @@ function App() {
   }
 
   async function newProduct() {
-    console.log({
-      productName,
-      productPrice
-    })
+    // console.log({
+    //   productName,
+    //   productPrice
+    // })
     
     const product = new Product()
     product.name = productName;
     product.price = Number(productPrice);
 
     const contact = new Contact()
-    contact.first_name = "Daniel"
-    contact.last_name = "Bergholz"
-    contact.email = "email2"
-    contact.phone = "fone2"
+    // contact.first_name = "Daniel"
+    // contact.last_name = "Bergholz"
+    // contact.email = "email2"
+    // contact.phone = "fone2"
+    contact.first_name = contactFirstName
+    contact.last_name = contactLastName
+    contact.email = contactEmail
+    contact.phone = contactPhone
     
     getRepository(Product).save(product)
+    getRepository(Contact).save(contact)
 
     setProducts(p => [ ...p, product ])
     setProductName("")
@@ -53,8 +62,7 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+      {/* <header className="App-header">
         <div style={{ display: 'flex' }}>
           <input
             type="text"
@@ -82,6 +90,30 @@ function App() {
           placeholder={"productPrice"}
           onChange={(e) => setProductPrice(e.target.value)}
         />
+        <input
+          type="text"
+          value={contactFirstName}
+          placeholder={"firstName"}
+          onChange={(e) => setContactFirstName(e.target.value)}
+        />
+        <input
+          type="text"
+          value={contactLastName}
+          placeholder={"lastName"}
+          onChange={(e) => setContactLastName(e.target.value)}
+        />
+        <input
+          type="text"
+          value={contactEmail}
+          placeholder={"email"}
+          onChange={(e) => setContactEmail(e.target.value)}
+        />
+        <input
+          type="text"
+          value={contactPhone}
+          placeholder={"phone"}
+          onChange={(e) => setContactPhone(e.target.value)}
+        />
         <button onClick={newProduct}>new product</button>
         <hr />
         {products.map((product, index) => 
@@ -91,7 +123,10 @@ function App() {
             <br />
           </div>
         )}
-      </section>
+      </section> */}
+
+      <Rotas />
+
     </div>
   );
 }

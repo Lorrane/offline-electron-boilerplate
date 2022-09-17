@@ -6,7 +6,6 @@ const database = new sqlite3.Database("./db.sqlite3", err => {
 })
 
 ipcMain.on('asynchronous-message', (event, arg) => {
-  console.log(arg); // prints "ping"
   const sql = arg;
   database.all(sql, (err, rows) => {
     event.reply('asynchronous-reply', (err && err.message) || rows);
